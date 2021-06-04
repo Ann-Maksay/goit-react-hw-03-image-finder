@@ -1,7 +1,13 @@
+import React, { Component } from "react";
+
 import "./App.scss";
 
-function App() {
-  return <div className="App"></div>;
+class App extends Component {
+  state = {};
+
+  render() {
+    return <div></div>;
+  }
 }
 
 export default App;
