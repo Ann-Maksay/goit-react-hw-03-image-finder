@@ -1,24 +1,32 @@
 import React, { Component } from "react";
 
+import Searchbar from "./Searchbar/Searchbar";
+import ImageGallery from "./ImageGallery/ImageGallery";
+
 import "./App.scss";
 
 class App extends Component {
   state = {
-    page: 1,
     filter: "",
-    searchResalts: [],
   };
 
   onSearch = (value) => {
-    this.setState({ page: 1, filter: value });
+    this.setState({ filter: value });
   };
 
-  onLoadMore = () => {
-    this.setState((prevState) => ({ page: prevState.page + 1 }));
-  };
+  // onLoadMore = () => {
+  //   this.setState((prevState) => ({ page: prevState.page + 1 }));
+  // };
 
   render() {
-    return <div></div>;
+    const { filter } = this.state;
+
+    return (
+      <div>
+        <Searchbar onSearch={this.onSearch} />
+        {filter && <ImageGallery value={filter} />}
+      </div>
+    );
   }
 }
 
