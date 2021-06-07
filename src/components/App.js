@@ -4,6 +4,7 @@ import Searchbar from "./Searchbar/Searchbar";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import LoadMoreButton from "./LoadMoreButton/LoadMoreButton";
 import LoaderComponent from "./LoaderComponent/LoaderComponent";
+import Modal from "./Modal/Modal";
 
 import fetchImg from "../api/pixbay-api";
 
@@ -15,6 +16,7 @@ class App extends Component {
     page: 1,
     searchResalts: [],
     isLoading: false,
+    modalImg: "",
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -55,15 +57,32 @@ class App extends Component {
       .catch((error) => console.log(error));
   };
 
+  toggleModal = (smallImgUrl) => {
+    if (smallImgUrl) {
+      const imgUrl = this.state.searchResalts.find(
+        (elem) => elem.webformatURL === smallImgUrl
+      );
+      this.setState({ modalImg: imgUrl.largeImageURL });
+    } else {
+      this.setState({ modalImg: "" });
+    }
+  };
+
   render() {
-    const { searchResalts, isLoading } = this.state;
+    const { searchResalts, isLoading, modalImg } = this.state;
 
     return (
       <div className="App">
         <Searchbar onSearch={this.onSearch} />
+        {modalImg && (
+          <Modal toggleModal={this.toggleModal} modalImgUrl={modalImg} />
+        )}
         {searchResalts.length >= 1 && (
           <>
-            <ImageGallery searchResalts={searchResalts} />
+            <ImageGallery
+              searchResalts={searchResalts}
+              toggleModal={this.toggleModal}
+            />
             {isLoading ? (
               <LoaderComponent />
             ) : (

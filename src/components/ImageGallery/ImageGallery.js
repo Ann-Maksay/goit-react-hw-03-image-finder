@@ -4,17 +4,17 @@ import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 
 import ImageGalleryWrapper from "./ImageGalleryStyled";
 
-const ImageGallery = ({ searchResalts }) => {
+const ImageGallery = ({ searchResalts, toggleModal }) => {
   return (
     <>
       <ImageGalleryWrapper>
         <ul className="ImageGallery">
-          {searchResalts.map(({ id, webformatURL, largeImageURL }) => {
+          {searchResalts.map(({ id, webformatURL }) => {
             return (
               <ImageGalleryItem
                 key={id}
                 smallImageUrl={webformatURL}
-                largeImageUrl={largeImageURL}
+                toggleModal={toggleModal}
               />
             );
           })}
