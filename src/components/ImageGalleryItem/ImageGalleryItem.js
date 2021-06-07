@@ -10,3 +10,8 @@ const ImageGalleryItem = ({ smallImageUrl, largeImageUrl }) => {
 };
 
 export default ImageGalleryItem;
+
+ImageGalleryItem.propTypes = {
+  smallImageUrl: PropTypes.string.isRequired,
+  largeImageUrl: PropTypes.string.isRequired,
+};

@@ -8,7 +8,16 @@ const fetchImg = (value, page) => {
     .get(
       `https://pixabay.com/api/?q=${value}&page=${page}&image_type=photo&orientation=horizontal&per_page=12`
     )
-    .then(({ data }) => data);
+    .then(({ data }) => {
+      const newResults = data.hits.map((elem) => {
+        return {
+          id: elem.id,
+          webformatURL: elem.webformatURL,
+          largeImageURL: elem.largeImageURL,
+        };
+      });
+      return newResults;
+    });
 };
 
 export default fetchImg;

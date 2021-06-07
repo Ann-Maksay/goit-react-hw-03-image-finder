@@ -1,35 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import fetchImg from "../../api/pixbay-api";
 import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 
-class ImageGallery extends Component {
-  state = {
-    page: 1,
-    searchResalts: [],
-  };
+import ImageGalleryWrapper from "./ImageGalleryStyled";
 
-  componentDidMount() {
-    const { value } = this.props;
-    const { page } = this.state;
-    fetchImg(value, page).then(({ hits }) => {
-      const newResults = hits.map((elem) => {
-        return {
-          id: elem.id,
-          webformatURL: elem.webformatURL,
-          largeImageURL: elem.largeImageURL,
-        };
-      });
-      this.setState({ searchResalts: newResults });
-    });
-  }
-
-  render() {
-    const { searchResalts } = this.state;
-
-    return (
-      <>
-        <ul>
+const ImageGallery = ({ searchResalts }) => {
+  return (
+    <>
+      <ImageGalleryWrapper>
+        <ul className="ImageGallery">
           {searchResalts.map(({ id, webformatURL, largeImageURL }) => {
             return (
               <ImageGalleryItem
@@ -40,9 +19,19 @@ class ImageGallery extends Component {
             );
           })}
         </ul>
-      </>
-    );
-  }
-}
+      </ImageGalleryWrapper>
+    </>
+  );
+};
+
+ImageGallery.propTypes = {
+  searchResalts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      webformatURL: PropTypes.string,
+      largeImageURL: PropTypes.string,
+    })
+  ).isRequired,
+};
 
 export default ImageGallery;
